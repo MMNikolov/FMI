@@ -1,0 +1,2 @@
+The sum avg is: 5.5
+The most frequent number in the array is: 10
