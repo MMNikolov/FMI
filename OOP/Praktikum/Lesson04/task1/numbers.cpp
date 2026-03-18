@@ -9,11 +9,8 @@
     3.2.In the text file u need to write and the most common number
 */
 
-// записва масив в двоичен файл
 bool write_array(const int* arr, std::ofstream& os);
-// прочита масив от двоичен файл
 int* read_array(std::ifstream& is);
-// изписва нужната информация в текстови файл
 void writeStats(int*& arr, std::ofstream& os);
 int mostFrequentNumber(int* arr);
 
@@ -90,7 +87,15 @@ void writeStats(int*& arr, std::ofstream& os){
     {
         sum += arr[i];
     }
-    
+    os << "The size of the array: " << ARR_SIZE << "\n";
+
+    os << "The array: ";
+    for (unsigned int i = 0; i < ARR_SIZE; i++)
+    {
+        os << arr[i] << ' ';
+    }
+    os << "\n";
+
     double avg = (double)sum / ARR_SIZE;
     os << "The sum avg is: " << avg << "\n";
 
@@ -112,7 +117,7 @@ int mostFrequentNumber(int* arr){
                 count++;
             }
         }
-
+        
         if (count > maxCount || count == maxCount && arr[i] > res)
         {
             maxCount = count;
