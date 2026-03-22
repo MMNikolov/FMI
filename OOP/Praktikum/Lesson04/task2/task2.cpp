@@ -7,10 +7,11 @@
 4.Add a product in the txt file
 5.Delete product by partiotion number
 */
-static int k = 1;
 
 Product* initializeSomeValues(Product*& products)
 {
+    int k = 1;
+    
     products[0].partitionNumber = k++;
     strcpy(products[0].description, "Apple");
     products[0].cost = 2.2;
