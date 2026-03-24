@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <cstring>
 #define MAX_TUPLES 20
 
 template<typename T1, typename T2>
