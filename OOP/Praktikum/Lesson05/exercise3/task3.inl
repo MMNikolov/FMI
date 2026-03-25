@@ -106,6 +106,6 @@ void display<char *, char *>(const Tuple<char *, char *> &tuple)
     }
 
     //Exercise 2
-    //Task 1
+    //Lazy Pairs
     
 }

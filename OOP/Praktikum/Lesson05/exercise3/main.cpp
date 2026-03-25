@@ -12,5 +12,11 @@ int main(){
     display(tuple1);
     display(tuple2);
 
+    //Exercise 2
+    //lazy pairs
+
     return 0;
 }
+
+//Information taken for lazy pairs:
+// - 

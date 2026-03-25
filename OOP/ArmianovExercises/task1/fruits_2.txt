@@ -1,0 +1,3 @@
+Name: Apple, Color: red, Is it growing on trees: true, Is it sweet: true, Is it tropical: true, Is it an yearly fruit: true, Is it with a pyrene: true, How much energy per 100g: 109;
+Name: Banana, Color: yellow, Is it growing on trees: true, Is it sweet: false, Is it tropical: true, Is it an yearly fruit: false, Is it with a pyrene: true, How much energy per 100g: 318;
+Name: Vegetable, Color: green, Is it growing on trees: false, Is it sweet: false, Is it tropical: false, Is it an yearly fruit: false, Is it with a pyrene: false, How much energy per 100g: 831;

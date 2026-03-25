@@ -61,4 +61,7 @@ void display(const Tuple<T1, T2>& tuple1);
 template<>
 void display<char*, char*>(const Tuple<char*, char*>& tuple);
 
+//Exercise 2
+//Lazy pairs
+
 #include "task3.inl"

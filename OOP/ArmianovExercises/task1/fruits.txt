@@ -1,0 +1,3 @@
+Apple red 1 1 1 1 1 109
+Banana yellow 1 0 1 0 1 318
+Vegetable green 0 0 0 0 0 831
