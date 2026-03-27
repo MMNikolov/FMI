@@ -34,8 +34,15 @@ int main(){
     }
     writeFruitInBinary(fruits, outputBinary, size);
     
-
+    std::ifstream inputBinary("fruits_bin.bin", std::ios::binary | std::ios::in);
+    if (!inputBinary)
+    {
+        std::cerr << "There is a problem with the file";
+        return 0;
+    }
+    
     is.close(); os.close();
     outputBinary.close();
+    inputBinary.close();
     return 0;
 }
