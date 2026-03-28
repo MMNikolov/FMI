@@ -3,7 +3,7 @@
 computer::computer(GPU gpu, const char* cpu, bool hasCooling)
     : gpu((GPU)0)
     , cpu(nullptr)
-    , hasCooling(false)
+    , hasCooling(true)
 {
     if (gpu == GPU::UNKNOWN)
     {
@@ -14,7 +14,7 @@ computer::computer(GPU gpu, const char* cpu, bool hasCooling)
     if (!setString(this->cpu, cpu))
     {
         this->IsValid = false;
-        free();
+        freeMemory();
         return;
     }
     
@@ -22,7 +22,7 @@ computer::computer(GPU gpu, const char* cpu, bool hasCooling)
     this->hasCooling = hasCooling;
 };
 
-bool computer::setString(char* where, const char* what)
+bool computer::setString(char*& where, const char* what)
 {
     if (!what || *what == '\0')
     {
@@ -36,13 +36,14 @@ bool computer::setString(char* where, const char* what)
     }
     
     strcpy(temp, what);
-    delete where;
+
+    delete[] where;
     where = temp;
 
-    return 0;
+    return true;
 };
 
-void computer::free()
+void computer::freeMemory()
 {
     delete[] cpu;
 }

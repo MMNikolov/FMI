@@ -30,6 +30,6 @@ private:
     bool hasCooling;
     bool IsValid;
 private:
-    bool setString(char* where, const char* what);
-    void free();
+    bool setString(char*& where, const char* what);
+    void freeMemory();
 };
