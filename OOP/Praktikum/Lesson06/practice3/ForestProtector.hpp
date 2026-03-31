@@ -8,22 +8,26 @@
 class ForestProtector
 {
 public:
-    ForestProtector(const char* name, unsigned age, unsigned yearsWorking);
+    ForestProtector(const char *name, unsigned age, unsigned yearsWorking);
     ~ForestProtector()
     {
         delete[] name;
-        delete[] protectorsTree;
+        //delete[] protectorsTree;
     };
 
-    bool SetString(char* where, const char* what);
-    void freeMemory();
-
+    void PrintCharacteristics();
+    
 private:
-    const char* name;
+    char *name;
     unsigned int age;
     unsigned int yearsWorking;
-    tree* protectorsTree;
+    //tree *protectorsTree;
     bool isValid;
 
-    
+private:
+    bool SetString(char *&where, const char *what);
+    void freeMemory();
 };
+
+void writeBinaryFile(std::ofstream& os, ForestProtector& protector);
+void readBinaryFile(std::ifstream& is, ForestProtector& protector);
