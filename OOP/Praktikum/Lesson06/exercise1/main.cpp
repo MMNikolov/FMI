@@ -2,8 +2,7 @@
 
 int main(){
     //Input files
-    date calendarDate;
-    date calendarDate2;
+    date calendarDate; date calendarDate2;
     std::ifstream is("year.txt");
     if (!is)
     {
@@ -30,9 +29,13 @@ int main(){
     //Which day of the week it is
 
 
-    //Date difference
-    std::cout << "difference in days: ";
+    //Date difference, but i chose not to do the negative part with std::abs
     printDateDifference(calendarDate2, calendarDate);
+
+    //difference in dates like strcmp?!?!?!?!
+    //what...
+
+    //adding days to a date
 
     is.close(); os.close();
     return 0;

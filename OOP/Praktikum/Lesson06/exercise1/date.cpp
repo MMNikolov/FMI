@@ -164,3 +164,17 @@ unsigned DaysInDate(const date& date1)
 
     return totalDays;
 };
+
+//reverse engineer the date, because I cant be bothered anymore HAHAHA
+void printNewDate(unsigned int days)
+{
+
+};
+
+unsigned addDaysToDate(date& date1, unsigned int daysToAdd)
+{
+    unsigned daysToDate = DaysInDate(date1);
+    daysToDate += daysToAdd;
+
+    return daysToDate;
+};

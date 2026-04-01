@@ -32,3 +32,5 @@ private:
 
 void printDateDifference(const date &date1, const date &date2);
 unsigned DaysInDate(const date &date1);
+unsigned addDaysToDate(date& date1, unsigned int days);
+void printNewDate(unsigned int days);
