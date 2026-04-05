@@ -1,7 +1,8 @@
 #include "licencePlate.hpp"
 
-licencePlate::licencePlate(const char* front, unsigned int num, const char* back)
-: front(nullptr), num(0), back(nullptr), isValid(true){
+licencePlate::licencePlate(const char *front, unsigned int num, const char *back)
+    : front(nullptr), num(0), back(nullptr), isValid(true)
+{
 
     if (!setString(this->front, front) || strlen(front) > 2)
     {
@@ -10,14 +11,14 @@ licencePlate::licencePlate(const char* front, unsigned int num, const char* back
         freeMemory();
         return;
     }
-    
+
     if (num < 1 || num > 9999)
     {
         std::cerr << "The number must be between 0-9999";
         this->isValid = false;
         return;
     }
-    
+
     if (!setString(this->back, back) || strlen(back) > 2)
     {
         std::cerr << "Problem with setting the string on the back of the licence plate!";
@@ -26,25 +27,25 @@ licencePlate::licencePlate(const char* front, unsigned int num, const char* back
         return;
     }
 
-
     this->num = num;
 };
 
 licencePlate::licencePlate() : front(nullptr), num(0), back(nullptr), isValid(false) {}
 
-bool licencePlate::setString(char*& where, const char* what){
+bool licencePlate::setString(char *&where, const char *what)
+{
     if (!what || *what == '\0')
     {
         return false;
     }
 
-    char* temp = new (std::nothrow) char[strlen(what) + 1];
+    char *temp = new (std::nothrow) char[strlen(what) + 1];
     if (!temp)
     {
-        std::cerr << "Cant allocate memory properly in SetString";        
+        std::cerr << "Cant allocate memory properly in SetString";
         return false;
     }
-    
+
     strcpy(temp, what);
 
     delete[] where;
@@ -53,7 +54,8 @@ bool licencePlate::setString(char*& where, const char* what){
     return true;
 }
 
-void licencePlate::freeMemory(){
+void licencePlate::freeMemory()
+{
     delete[] front;
     delete[] back;
 
@@ -61,14 +63,16 @@ void licencePlate::freeMemory(){
     back = nullptr;
 }
 
-void licencePlate::readFromTxt(std::ifstream& is){
+void licencePlate::readFromTxt(std::ifstream &is)
+{
     char tempFront[256];
     char tempBack[256];
     unsigned int tempNum;
 
-    if (is >> tempFront >> tempNum >> tempBack) {
-        // Corrected: Validate data BEFORE applying it to the object
-        if (strlen(tempFront) > 2 || strlen(tempBack) > 2 || tempNum < 1 || tempNum > 9999) {
+    if (is >> tempFront >> tempNum >> tempBack)
+    {
+        if (strlen(tempFront) > 2 || strlen(tempBack) > 2 || tempNum < 1 || tempNum > 9999)
+        {
             std::cerr << "Error: File contained invalid plate format.\n";
             this->isValid = false;
             return;
@@ -78,11 +82,44 @@ void licencePlate::readFromTxt(std::ifstream& is){
         this->num = tempNum;
         setString(this->back, tempBack);
         this->isValid = true;
-    } else {
+    }
+    else
+    {
         this->isValid = false;
-    } 
+    }
 }
 
-void licencePlate::printCharacteristics(){
+void licencePlate::printCharacteristics()
+{
+    if (this->front == nullptr || this->back == nullptr)
+    {
+        std::cout << "Invalid plate\n";
+        return;
+    }
     std::cout << this->front << " " << this->num << " " << this->back << '\n';
+}
+
+void licencePlate::AssignCity()
+{
+    if (this->front == nullptr)
+    {
+        std::cout << "Error: front is null\n";
+        return;
+    }
+
+    const char *city = "Unknown";
+
+    const char *regions[LICENSE_PLATES] = {"E", "A", "B", "BT", "BH", "BP", "EB", "TX", "K", "KH", "OB", "M", "PA", "PK", "EH", "PB", "PP", "P", "CC", "CH", "CM", "CO", "C", "CA", "CB", "CT", "T", "X", "H", "Y"};
+    const char *cities[LICENSE_PLATES] = {"Blagoevgrad", "Burgas", "Varna", "Veliko Tarnovo", "Vidin", "Vraca", "Gabrovo", "Dobrich", "Kardjalii", "Kiostendil", "Lovech", "Montana", "Pazardjik", "Pernik", "Pleven", "Plovdiv", "Razgrad", "Ruse", "Silistra", "Sliven", "Smolqn", "Sofia-Oblast", "Sofia-Stolica", "Sofia-Stolica", "Sofia-Stolica", "Stara Zagora", "Targovishte", "Haskovo", "Shumen", "Yambol"};
+
+    for (int i = 0; i < LICENSE_PLATES; ++i)
+    {
+        if (strcmp(this->front, regions[i]) == 0)
+        {
+            city = cities[i];
+            break;
+        }
+    }
+
+    std::cout << "The registration number is from: " << city << " city" << std::endl;
 }
