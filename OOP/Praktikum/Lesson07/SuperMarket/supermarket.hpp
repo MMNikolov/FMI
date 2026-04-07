@@ -49,7 +49,6 @@ public:
     Store& operator=(const Store& other);
     ~Store();
 
-    
     void addCashiers(const Cashier& cashier);
     void read(std::istream& in);
     void print(std::ostream& out) const;
