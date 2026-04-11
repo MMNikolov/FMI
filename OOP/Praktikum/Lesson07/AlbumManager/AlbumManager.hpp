@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <cstring>
 
+#define MAX_SONGS_IN_ALBUM 65000
+
 class Song
 {
 public:
@@ -20,7 +22,10 @@ public:
     // destructor
     ~Song();
 
-    void printSong();
+    void printSong() const;
+    const int GetLengthInSeconds() const;
+    const char* GetArtist() const;
+    const char* GetTitle() const;
 
 private:
     char *title;
@@ -49,16 +54,17 @@ public:
     //destrcutor
     ~Album();
 
-    unsigned short getlenthInSeconds();
-    char* getArtist();
-    Song* findSong();
-    // duplicates count as same artist, title, ReleaseDate and length
-    void deleteDuplicates();
-    void detectCovers();
+    void addSong(const Song& song);
+    unsigned short getlenthInSeconds() const;
+    char* getArtistInAlbum() const;
+    Song* findSong(const char* title);
+    void printAlbum() const;
 
 private:
     Song* songs;
     char* albumName;
+    //I doubt there will be an album with more than 65k songs
+    unsigned short songsCount;
 
     void copyFrom(const Album& other);
     void free();
