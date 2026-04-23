@@ -35,12 +35,12 @@ public:
     void changeActivity();
 
     // getters
-    char *getDescription() const;
-    char *getModel() const;
+    const char *getDescription() const;
+    const char *getModel() const;
     double getPowerInAmpers() const;
     bool getPluggedIn() const;
     bool getTurnedOn() const;
-    int getId() const;
+    unsigned int getId() const;
 
 private:
     char *description;
