@@ -109,7 +109,26 @@ void ElectricalAppliance::changeDescriptionAndModel(const char *newDesc, const c
         throw std::invalid_argument("There is a problem with changing the description and model");
     }
 
+    char* tempDesc = new char[strlen(newDesc) + 1];
+    if (!tempDesc)
+    {
+        throw std::bad_alloc();
+    }
+    strcpy(tempDesc, newDesc);
+
+    char* tempModel = new char[strlen(newModel) + 1];
+    if (!tempModel)
+    {
+        delete[] tempDesc;
+        throw std::bad_alloc();
+    }
+    strcpy(tempModel, newModel);
+
+    free();
     
+    this->description = tempDesc;
+    this->model = tempModel;
+    // One quesstion: Shouldnt we delete the temp variable after we use them?
 }
 void ElectricalAppliance::changePower(double newPower)
 {
@@ -171,6 +190,10 @@ unsigned int ElectricalAppliance::getId() const
     return this->id;
 };
 
+void ElectricalAppliance::setPluggedIn(bool state) {
+    this->pluggedIn = state;
+}
+
 //---------------------
 // POWER STRIP 
 //---------------------
@@ -182,7 +205,7 @@ PowerStrip::PowerStrip()
 PowerStrip::PowerStrip(short inputs, double maxPowerOutput)
     : inputs(0), occupiedInouts(0), maxPowerOutput(0.0), burnedOut(false), appliances(nullptr)
 {
-    if (inputs > 65000 || occupiedInouts >> 65000 || maxPowerOutput < 0)
+    if (inputs > 65000 || occupiedInouts > 65000 || maxPowerOutput < 0)
     {
         throw std::invalid_argument("problem with initialising the data");
     }
@@ -191,7 +214,7 @@ PowerStrip::PowerStrip(short inputs, double maxPowerOutput)
     this->occupiedInouts = 0;
     this->maxPowerOutput = maxPowerOutput;
     this->burnedOut = false;
-    this->appliances = nullptr;
+    this->appliances = new ElectricalAppliance*[inputs];
 }
 
 PowerStrip::PowerStrip(const PowerStrip &other)
@@ -251,7 +274,7 @@ void PowerStrip::plugInAppliance(ElectricalAppliance *appliance)
 
 void PowerStrip::plugOffAppliance(const ElectricalAppliance *appliance)
 {
-    int index = 0;
+    int index = -1;
     for (int i = 0; i < occupiedInouts; i++)
     {
         if (this->appliances[i] == appliance)
@@ -262,13 +285,16 @@ void PowerStrip::plugOffAppliance(const ElectricalAppliance *appliance)
         }
     }
     
-    this->appliances[index] = this->appliances[occupiedInouts];
-    occupiedInouts--;
+    if (index = -1)
+    {
+        this->appliances[index] = this->appliances[occupiedInouts - 1];
+        occupiedInouts--;
+    }
 }
 
 bool PowerStrip::HasPowerStripReachMax()
 {
-    double sumOfPower;
+    double sumOfPower = 0.0;
     for (int i = 0; i < occupiedInouts; i++)
     {
         if (this->appliances[i]->getTurnedOn())
@@ -315,12 +341,8 @@ bool PowerStrip::isBurnedOut() const
 
 void PowerStrip::free()
 {
-    for (int i = 0; i < occupiedInouts; i++)
-    {
-        delete[] appliances[i];
-    }
-    
     delete[] appliances;
+    appliances = nullptr;
 }
 
 void PowerStrip::copyFrom(const PowerStrip &other)
@@ -334,5 +356,5 @@ void PowerStrip::copyFrom(const PowerStrip &other)
     this->burnedOut = false;
     this->occupiedInouts = 0;
     this->maxPowerOutput = other.maxPowerOutput;
-    this->appliances = nullptr;
+    this->appliances = new ElectricalAppliance*[this->inputs];
 }

@@ -24,8 +24,8 @@ public:
     ~ElectricalAppliance();
 
     // functionalities
-    void writeInTxt(const char *fileName) const;
-    void readInTxt(const char *fileName);
+    void writeInTxt(std::ostream& out) const;
+    void readInTxt(std::istream& in);
     void changeDescriptionAndModel(const char *newDesc, const char *newModel);
     // Only when its plugged in
     void changePower(double newPower);
@@ -33,6 +33,7 @@ public:
     void changeState();
     // You can change turn on and off feature only when its plugged in
     void changeActivity();
+    void setPluggedIn(bool state);
 
     // getters
     const char *getDescription() const;
@@ -74,26 +75,24 @@ public:
     ~PowerStrip();
 
     // functionalities
-    void writeInTerminal();
+    void writeInTerminal(std::ostream& out) const;
 
-    void plugInAppliance(const ElectricalAppliance* appliance);
+    void plugInAppliance(ElectricalAppliance* appliance);
     void plugOffAppliance(const ElectricalAppliance* appliance);
-
-    void uopdateLoad();
 
     bool HasPowerStripReachMax();
 
     // getters
-    short getInputs();
-    double getMaxPowerOutput();
-    bool isBurnedOut();
+    unsigned short getInputs() const;
+    unsigned short getOccupiedInputs() const;
+    double getMaxPowerOutput() const;
+    bool isBurnedOut() const;
 
 private:
-    short inputs;
-    short occupiedInouts;
+    unsigned short inputs;
+    unsigned short occupiedInouts;
     double maxPowerOutput;
     bool burnedOut;
-
     ElectricalAppliance **appliances;
 
 private:
