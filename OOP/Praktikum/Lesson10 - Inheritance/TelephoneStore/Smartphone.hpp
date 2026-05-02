@@ -19,7 +19,6 @@ public:
     //getters
     const char* getOS() const;
     unsigned getMemory() const;
-    double getSmartphonePrice() const;
 
 private:
     char* os;
