@@ -31,10 +31,21 @@ Specialist &Specialist::operator=(const Specialist &other)
     if (this != &other)
     {
         Employee::operator=(other);
-        free();
+        char *tempDescription = nullptr;
 
-        this->description = new char[strlen(other.description) + 1];
-        strcpy(this->description, other.description);
+        try
+        {
+            tempDescription = new char[strlen(other.description) + 1];
+            strcpy(tempDescription, other.description);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+            throw;
+        }
+
+        free();
+        this->description = tempDescription;
     }
 
     return *this;

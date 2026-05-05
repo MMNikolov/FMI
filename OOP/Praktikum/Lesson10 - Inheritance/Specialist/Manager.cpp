@@ -84,7 +84,7 @@ void Manager::addEmployee(Employee *employee)
     {
         return;
     }
-    
+
     if (this->employeesCnt >= this->capacity)
     {
         resize();
@@ -101,12 +101,16 @@ void Manager::free()
 
 void Manager::resize()
 {
-    this->capacity = (this->capacity == 0) ? 2 : this->capacity * 2;
-    Employee** temp = new Employee*[this->capacity];
+    this->capacity = (this->capacity == 0) 
+        ? 2 : this->capacity * 2;
+
+    Employee **temp = new Employee *[this->capacity];
+
     for (unsigned i = 0; i < this->employeesCnt; i++)
     {
         temp[i] = this->employees[i];
     }
+    
     delete[] this->employees;
     this->employees = temp;
 }
