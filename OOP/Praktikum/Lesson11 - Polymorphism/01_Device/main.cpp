@@ -17,7 +17,7 @@ int main()
         // Добавяме разбъркано, за да тестваме сортировката
         myInv.addDevice(c1); // 110
         myInv.addDevice(l1); // 2400
-        myInv.addDevice(c2); // 250 (Тук се чупи възходящия ред)
+        //myInv.addDevice(c2); // 250 (Тук се чупи възходящия ред)
         myInv.addDevice(l2); // 3200
 
         myInv.printDevices();

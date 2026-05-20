@@ -62,14 +62,14 @@ Inventory::~Inventory()
 
 void Inventory::printDevices() const
 {
-    std::cout << "--------The list of all the devices---------------";
+    std::cout << "--------The list of all the devices---------------\n";
 
     for (unsigned i = 0; i < this->count; i++)
     {
         this->devices[i]->print();
     }
 
-    std::cout << "--------------------------------------------------";
+    std::cout << "--------------------------------------------------\n";
 }
 
 void Inventory::addDevice(const IDevice &device)
