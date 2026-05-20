@@ -8,8 +8,23 @@ class Question
 {
 public:
     Question();
-    ~Question();
+    Question(const char* description, unsigned points);
+    Question(const Question& other);
+    Question& operator=(const Question& other);
+    virtual ~Question();
+
+    //methods
+    virtual void ask() const = 0;
+    virtual unsigned grade() const = 0;
+
+    //getters
+    const char* getDesc() const { return this->description; };
+
+protected:
+    char* description;
+    unsigned points;
 
 private:
-    /* data */
+    void free();
+    void copyFrom(const Question& other);
 };

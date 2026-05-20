@@ -2,12 +2,14 @@
 
 #include "Question.hpp"
 
-class MultipleChoice
+class MultipleChoice : public Question
 {
 public:
-    MultipleChoice(/* args */);
+    MultipleChoice();
+    MultipleChoice(const char* description, unsigned points, const char** answe);
     ~MultipleChoice();
 
 private:
-    /* data */
+    bool* choices;
+    size_t size;
 };
