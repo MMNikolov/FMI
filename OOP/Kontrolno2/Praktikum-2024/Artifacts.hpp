@@ -6,7 +6,7 @@ class Artifacts
 {
 public:
     Artifacts();
-    virtual ~Artifacts();
+    virtual ~Artifacts() = default;
 
     //methods 
     virtual void draw() const = 0;

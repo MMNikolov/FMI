@@ -7,16 +7,17 @@ Monster::Monster()
     this->name[0] = '\0';
 }
 
-Monster::Monster(const char *name, unsigned power, unsigned hp)
+Monster::Monster(const char *name, int power, int hp)
 {
-    //lets say that the power and the HP cant be over 1000
-    if (!name || power > 1000 || hp > 1000)
+    // lets say that the power and the HP cant be over 1000
+    if (!name || power > 1000 || hp > 1000 || power <= 0 || hp <= 0)
     {
         throw std::invalid_argument("Invalid input for the Monster");
     }
-    
+
     this->name = new char[strlen(name) + 1];
     strcpy(this->name, name);
+
     this->power = power;
     this->hp = hp;
 }
@@ -33,7 +34,7 @@ Monster &Monster::operator=(const Monster &other)
         free();
         copyFrom(other);
     }
-    
+
     return *this;
 }
 
@@ -42,25 +43,32 @@ Monster::~Monster()
     free();
 }
 
-void Monster::interact(Player &p) const
+void Monster::draw() const
 {
-    if (this->power > p.getHP())
-    {
-        std::cout << "The player has been slain";
-        return;
-    }
-
-    std::cout << "The player haas taken " << this->power << " damage.\n"; 
-    p.setHP(p.getHP() - power);
+    std::cout << "[Monster] There is a monster in the way. Slay it";
 }
 
-bool Monster::isDestroyed() const
+void Monster::interact(Player &p)
+{
+    std::cout << "The player has taken " << this->power << " damage.\n";
+    p.setHP(p.getHP() - this->power);
+
+    std::cout << "The monster has taken " << p.getPower() << " damage.\n";
+    this->hp -= p.getPower();
+
+    if (p.getHP() <= 0)
+    {
+        std::cout << "The player has been slain!\n";
+    }
+}
+
+bool Monster::IsDestroyed() const
 {
     if (this->hp <= 0)
     {
         return true;
     }
-    
+
     return false;
 }
 

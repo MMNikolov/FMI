@@ -6,19 +6,20 @@ class Monster : public Artifacts
 {
 public:
     Monster();
-    Monster(const char* name, unsigned power, unsigned hp);
+    Monster(const char* name, int power, int hp);
     Monster(const Monster& other);
     Monster& operator=(const Monster& other);
     ~Monster();
 
     //methods
-    void interact(Player& p) const;
-    bool isDestroyed() const;
+    void draw() const override;
+    void interact(Player& p) override;
+    bool IsDestroyed() const override;
 
 private:
     char* name;
-    unsigned power;
-    unsigned hp;
+    int power;
+    int hp;
     unsigned position;
 
 private:

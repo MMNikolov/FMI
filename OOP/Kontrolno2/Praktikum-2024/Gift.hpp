@@ -2,12 +2,10 @@
 
 #include "Artifacts.hpp"
 
-static unsigned globalId;
-
-class Teleport : virtual public Artifacts
+class Gift  : virtual public Artifacts
 {
 public:
-    Teleport();
+    Gift(int hp);
 
     //methods
     virtual void draw() const override;
@@ -15,11 +13,5 @@ public:
     virtual bool IsDestroyed() const override;
 
 protected:
-    const unsigned Id;
-    unsigned position;
-
-private:
-    const unsigned createId();
+    int hp;
 };
-
-unsigned randomNum();
