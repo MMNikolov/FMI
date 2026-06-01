@@ -8,7 +8,7 @@ public:
     MobileDevice(const char* name, int battery);
 
     MobileDevice(const MobileDevice& other);
-    MobileDevice& operator=(const MobileDevice& other) = delete;
+    MobileDevice& operator=(const MobileDevice& other);
 
     //no need for a destructor
 

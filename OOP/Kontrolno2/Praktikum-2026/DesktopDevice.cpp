@@ -3,7 +3,7 @@
 DesktopDevice::DesktopDevice(const char *name, const char *URL)
     : Device(name)
 {
-    if (!URL)
+    if (!URL || URL[0] == '\0')
     {
         throw std::invalid_argument("Invalid input in the Desktop Device");
     }
@@ -15,8 +15,18 @@ DesktopDevice::DesktopDevice(const char *name, const char *URL)
 DesktopDevice::DesktopDevice(const DesktopDevice &other)
     : Device(other.name)
 {
-    this->URL = new char[strlen(other.URL) + 1];
-    strcpy(this->URL, other.URL);
+    copyFrom(other);
+}
+
+DesktopDevice &DesktopDevice::operator=(const DesktopDevice &other)
+{
+    if (this != &other)
+    {
+        Device::operator=(other);
+        copyFrom(other);
+    }
+    
+    return *this;
 }
 
 DesktopDevice::~DesktopDevice()
@@ -57,4 +67,10 @@ Device *DesktopDevice::clone() const
 void DesktopDevice::free()
 {
     delete[] this->URL;
+}
+
+void DesktopDevice::copyFrom(const DesktopDevice &other)
+{
+    this->URL = new char[strlen(other.URL) + 1];
+    strcpy(this->URL, other.URL);
 }

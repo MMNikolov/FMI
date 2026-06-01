@@ -15,6 +15,17 @@ MobileDevice::MobileDevice(const MobileDevice &other)
     : Device(other.name), battery(other.battery)
 {}
 
+MobileDevice &MobileDevice::operator=(const MobileDevice &other)
+{
+    if (this != &other)
+    {
+        Device::operator=(other);
+        this->battery = other.battery;
+    }
+    
+    return *this;
+}
+
 unsigned MobileDevice::GetId() const
 {
     return this->id;

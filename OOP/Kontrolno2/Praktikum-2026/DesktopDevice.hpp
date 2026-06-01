@@ -8,7 +8,7 @@ public:
     DesktopDevice(const char* name, const char* URL);
 
     DesktopDevice(const DesktopDevice& other);
-    DesktopDevice& operator=(const DesktopDevice& other) = delete;
+    DesktopDevice& operator=(const DesktopDevice& other);
 
     ~DesktopDevice();
 
@@ -31,4 +31,5 @@ private:
     char* URL;
 
     void free();
+    void copyFrom(const DesktopDevice& other);
 };

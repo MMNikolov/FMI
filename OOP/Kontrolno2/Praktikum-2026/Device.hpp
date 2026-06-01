@@ -11,7 +11,7 @@ public:
     Device(const char* name);
 
     Device(const Device& other);
-    Device& operator=(const Device& other) = delete;
+    Device& operator=(const Device& other);
 
     virtual ~Device();
 
@@ -33,4 +33,5 @@ protected:
 
 private:
     void free();
+    void copyFrom(const Device& other);
 };

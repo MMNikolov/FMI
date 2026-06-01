@@ -17,8 +17,18 @@ Device::Device(const char *name)
 Device::Device(const Device &other)
     : id(Incrementer())
 {
-    this->name = new char[strlen(other.name) + 1];
-    strcpy(this->name, other.name);
+    copyFrom(other);
+}
+
+Device &Device::operator=(const Device &other)
+{
+    if (this != &other)
+    {
+        free();
+        copyFrom(other);
+    }
+    
+    return *this;
 }
 
 Device::~Device()
@@ -36,3 +46,8 @@ void Device::free()
     delete[] this->name;
 }
 
+void Device::copyFrom(const Device &other)
+{
+    this->name = new char[strlen(other.name) + 1];
+    strcpy(this->name, other.name);
+}
