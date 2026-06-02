@@ -25,6 +25,9 @@ public:
     virtual Device* clone() const = 0;
 
 protected:
+    Device(unsigned explicitId, const char* name);
+
+protected:
     const unsigned id;
     char* name;
 

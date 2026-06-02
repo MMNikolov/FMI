@@ -7,13 +7,25 @@ MobileDevice::MobileDevice(const char *name, int battery)
     {
         throw std::invalid_argument("Invalid inout for the battery");
     }
+
+    this->battery = battery;
+}
+
+MobileDevice::MobileDevice(unsigned explicitId, const char *name, int battery)
+    : Device(explicitId, name)
+{
+    if (battery < 0 || battery > 100)
+    {
+        throw std::invalid_argument("Invalid battery");
+    }
     
     this->battery = battery;
 }
 
 MobileDevice::MobileDevice(const MobileDevice &other)
-    : Device(other.name), battery(other.battery)
-{}
+    : Device(other), battery(other.battery)
+{
+}
 
 MobileDevice &MobileDevice::operator=(const MobileDevice &other)
 {
@@ -22,7 +34,7 @@ MobileDevice &MobileDevice::operator=(const MobileDevice &other)
         Device::operator=(other);
         this->battery = other.battery;
     }
-    
+
     return *this;
 }
 

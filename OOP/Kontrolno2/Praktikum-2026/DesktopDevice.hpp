@@ -6,6 +6,7 @@ class DesktopDevice : public Device
 {
 public:
     DesktopDevice(const char* name, const char* URL);
+    DesktopDevice(unsigned explicitId, const char* name, const char* URL);
 
     DesktopDevice(const DesktopDevice& other);
     DesktopDevice& operator=(const DesktopDevice& other);

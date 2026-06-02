@@ -20,7 +20,10 @@ public:
     bool disconnect(int DeviceId);
     void tick(unsigned cnt = 1);
     void saveLog(const char* fileName) const;
-    // void loadLog(const char* fileName);
+    void loadLog(const char* fileName);
+
+    //abstract methods
+    void printServerState() const;
 
 private:
     unsigned capacity;

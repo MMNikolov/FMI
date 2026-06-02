@@ -30,22 +30,18 @@ bool Server::disconnect(int deviceId)
     {
         Device *currentDevice = this->connections[i].getDevice();
 
-        if (currentDevice->GetId() == (unsigned)deviceId)
+        if (currentDevice != nullptr && currentDevice->GetId() == (unsigned)deviceId)
         {
-            // Compact the array by shifting elements left
-            for (unsigned j = i; j < this->countConnections - 1; ++j)
-            {
-                this->connections[j] = this->connections[j + 1];
-            }
+            // O(1) swap with the last element
+            this->connections[i] = this->connections[this->countConnections - 1];
 
-            // Clear the last element to prevent double-free dangling pointers
+            // Clear the last element safely
             this->connections[this->countConnections - 1] = Connection();
             this->countConnections--;
 
             return true;
         }
     }
-
     return false;
 }
 
@@ -103,7 +99,66 @@ void Server::saveLog(const char *fileName) const
     file.close();
 }
 
+void Server::loadLog(const char *fileName)
+{
+    std::ifstream file(fileName);
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Could not open file for reading.");
+    }
+
+    free();
+    this->countConnections = 0;
+    this->currentTime = 0; // Рестартираме времето
+    this->connections = new Connection[this->capacity];
+
+    char type[50];
+    unsigned id;
+    char name[100];
+
+    // Четем формат: <type> <id> <name> <specific_field> <connected_at>
+    while (file >> type >> id >> name)
+    {
+        if (this->countConnections >= this->capacity)
+            break;
+
+        if (strcmp(type, "mobile") == 0)
+        {
+            int battery;
+            unsigned connectedAt;
+            file >> battery >> connectedAt;
+
+            // Създаваме устройство с изричното ID и го записваме в масива
+            MobileDevice md(id, name, battery);
+            this->connections[this->countConnections++] = Connection(md.clone(), connectedAt);
+        }
+        else if (strcmp(type, "desktop") == 0)
+        {
+            char url[256];
+            unsigned connectedAt;
+            file >> url >> connectedAt;
+
+            DesktopDevice dd(id, name, url);
+            this->connections[this->countConnections++] = Connection(dd.clone(), connectedAt);
+        }
+    }
+
+    file.close();
+}
+
+void Server::printServerState() const
+{
+    for (unsigned i = 0; i < this->countConnections; ++i)
+    {
+        if (this->connections[i].getDevice())
+        {
+            this->connections[i].getDevice()->print(std::cout);
+        }
+    }
+}
+
 void Server::free()
 {
     delete[] this->connections;
+    this->connections = nullptr; // Closes the vulnerability
 }

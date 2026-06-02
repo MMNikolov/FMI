@@ -7,13 +7,12 @@
 
 int main()
 {
-    try 
+    try
     {
-        // 1. Създайте сървър с капацитет 4 връзки и таймаут 10.
-        std::cout << "--- Стъпка 1 & 2 ---\n";
+        // 1. Create a server with capacity 4 and timeout 10.
         Server server1(4, 10);
 
-        // 2. Създайте 6 устройства от различни типове и с различни имена.
+        // 2. Create 6 devices of different types.
         MobileDevice m1("Phone1", 80);
         DesktopDevice d1("PC1", "192.168.0.1");
         MobileDevice m2("Tablet", 45);
@@ -21,42 +20,47 @@ int main()
         MobileDevice m3("SmartWatch", 99);
         DesktopDevice d3("ServerNode", "10.0.0.5");
 
-        // 3. Такт 0: свържете 2 устройства.
+        // 3. Tick 0: connect 2 devices.
         server1.connect(m1);
         server1.connect(d1);
-        
-        // Такт 3: свържете трето. Запишете server.log.
+
+        // Tick 3: connect third. Save server.log.
         server1.tick(3);
         server1.connect(m2);
-        
         server1.saveLog("server.log");
-        std::cout << "Логът 'server.log' е записан успешно (Такт 3).\n\n";
+        std::cout << "[Tick 3] Saved server.log\n";
 
-        // 4. Такт 5: свържете четвърто устройство.
-        std::cout << "--- Стъпка 4 ---\n";
-        server1.tick(2); // (Текущо време 3) + 2 = 5
+        // 4. Tick 5: connect fourth. Attempt fifth -> should be rejected.
+        server1.tick(2); // 3 + 2 = 5
         server1.connect(d2);
-        
-        // Опитайте да свържете пето — трябва да бъде отхвърлено.
-        bool isConnected = server1.connect(m3);
-        if (!isConnected)
+
+        if (!server1.connect(m3))
         {
-            std::cout << "Опитът за пето устройство е отхвърлен (сървърът е пълен).\n";
+            std::cout << "[Tick 5] Fifth device successfully rejected (Server full).\n";
         }
 
-        // 5. Такт 11: Прекъснете ръчно едно от останалите свързани устройства.
-        std::cout << "\n--- Стъпка 5 ---\n";
-        server1.tick(6); // (Текущо време 5) + 6 = 11. (m1 и d1 автоматично изтичат тук)
-        
-        // Прекъсваме ръчно m2
+        // 5. Tick 11: Disconnect manually one of the remaining, connect fifth.
+        server1.tick(6); // 5 + 6 = 11. (m1 and d1 naturally timeout here).
+
         server1.disconnect(m2.GetId());
-        std::cout << "Устройство с ID " << m2.GetId() << " е прекъснато ръчно.\n";
-        
-        // Свържете петото устройство.
+        std::cout << "[Tick 11] Device ID " << m2.GetId() << " disconnected manually.\n";
+
         server1.connect(m3);
-        std::cout << "Петото устройство (SmartWatch) е свързано.\n";
-        
-        std::cout << "Съдържание на final_server.log:\n";
+        std::cout << "[Tick 11] Connected fifth device.\n";
+
+        // 6. Create new server, load server.log. Connect sixth device.
+        Server server2(4, 10);
+        server2.loadLog("server.log");
+        server2.connect(d3);
+
+        // 7. Call print operation to demonstrate polymorphism.
+        std::cout << "\n--- Server 2 Polymorphic State ---\n";
+        server2.printServerState();
+
+        // 8. Save final log and print it.
+        server2.saveLog("final_server.log");
+
+        std::cout << "\n--- final_server.log Content ---\n";
         std::ifstream file("final_server.log");
         std::string line;
         while (std::getline(file, line))
@@ -65,9 +69,9 @@ int main()
         }
         file.close();
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
-        std::cerr << "Критична грешка: " << e.what() << '\n';
+        std::cerr << "Fatal Error: " << e.what() << '\n';
     }
 
     return 0;

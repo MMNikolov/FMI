@@ -1,3 +1,4 @@
 mobile 1 Phone1 80 0
 desktop 2 PC1 192.168.0.1 0
 mobile 3 Tablet 45 3
+desktop 6 ServerNode 10.0.0.5 0
