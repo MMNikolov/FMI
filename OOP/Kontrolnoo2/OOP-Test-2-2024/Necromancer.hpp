@@ -16,6 +16,7 @@ public:
     void move() override;
     void handleAttack(const Player& player) override;
     void print(std::ofstream& out) const override;
+    Player* clone() override;
 
     //getter
     unsigned GetUndeadCount() const { return this->undeadCount; }

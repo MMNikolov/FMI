@@ -25,7 +25,7 @@ PlayerCollection::~PlayerCollection()
     free();
 }
 
-void PlayerCollection::addPlayer(const Player& player)
+void PlayerCollection::addPlayer(Player& player)
 {
     // Prevent duplicate names
     for (unsigned i = 0; i < this->count; ++i)
@@ -41,7 +41,7 @@ void PlayerCollection::addPlayer(const Player& player)
         resize();
     }
 
-    //this->players[this->count++] = player.clone();
+    this->players[this->count++] = player.clone();
 }
 
 bool PlayerCollection::removePlayer(const char* name)

@@ -16,6 +16,7 @@ public:
     virtual void move() override;
     virtual void handleAttack(const Player& player) override;
     virtual void print(std::ofstream& out) const override;
+    Player* clone() override;
 
     //normal getters
     int GetArmour() const { return this->armour; }

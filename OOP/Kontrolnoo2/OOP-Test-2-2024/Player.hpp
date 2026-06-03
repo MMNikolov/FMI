@@ -20,7 +20,7 @@ public:
     virtual void move() = 0;
     virtual void handleAttack(const Player& player) = 0;
     virtual void print(std::ofstream& out) const = 0;
-    virtual Player* clone();
+    virtual Player* clone() = 0;
 
     //getters
     int GetHealth() const { return this->health; };

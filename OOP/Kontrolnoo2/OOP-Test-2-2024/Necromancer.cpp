@@ -58,6 +58,11 @@ void Necromancer::print(std::ofstream &out) const
     out << "[Necromancer]" << this->health << ' ' << this->name << ' ' << this->attackDamage << ' ' << weapons[num];
 }
 
+Player *Necromancer::clone()
+{
+    return new Necromancer(*this);
+}
+
 void Necromancer::free()
 {
     delete[] this->undeadSoldiers;

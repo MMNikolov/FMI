@@ -70,6 +70,11 @@ void Mage::print(std::ofstream &out) const
     out << "[Mage]" << this->health << ' ' << this->name << ' ' << this->attackDamage << ' ' << weapons[num];
 }
 
+Player *Mage::clone()
+{
+    return new Mage(*this);
+}
+
 void Mage::free()
 {
     delete[] this->skill;

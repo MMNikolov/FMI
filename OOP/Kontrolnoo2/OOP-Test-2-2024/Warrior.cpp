@@ -73,3 +73,8 @@ void Warrior::print(std::ofstream &out) const
     char* weapons[4] = {"Sword", "Wand", "Staff", "Axe"};
     out << "[Warrior]" << this->health << ' ' << this->name << ' ' << this->attackDamage << ' ' << weapons[num];
 }
+
+Player *Warrior::clone()
+{
+    return new Warrior(*this);
+}

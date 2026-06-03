@@ -13,7 +13,7 @@ public:
     
     ~PlayerCollection();
     
-    void addPlayer(const Player& player);
+    void addPlayer(Player& player);
     bool removePlayer(const char* name);
     
     // Read-only access as required by the assignment
