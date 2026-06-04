@@ -15,25 +15,26 @@ public:
 
     virtual ~User();
 
+    //virtual methods
+    virtual User* clone() const;
+
     //methods
-    friend std::ofstream& operator<<(std::ofstream& out, const User& user);
-    friend std::ifstream& operator>>(std::ifstream& in, User& user);
+    friend std::ostream& operator<<(std::ostream& out, const User& user);
+    friend std::istream& operator>>(std::istream& in, User& user);
 
     //getters
     const char* GetEmail() const { return this->email; }
     const char* GetPassword() const { return this->password; }
 
 protected:
-    static const char* gloabalEmail;
-    static const char* changeEmail();
-
-    const char* email;
+    char* email;
     char* password;
 
 private:
     void free();
+    void copyFrom(const User& other);
 };
 
-std::ofstream& operator<<(std::ofstream& out, const User& user);
-std::ifstream& operator>>(std::ifstream& in, User& user);
+bool IsValidEmail(const char* email);
+bool IsValidPassword(const char* password);
 bool operator==(const User& one, const User& two);
