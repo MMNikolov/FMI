@@ -63,7 +63,8 @@ std::ostream &operator<<(std::ostream &out, const Task &task)
 //same as the out operator
 std::istream &operator>>(std::istream &in, Task &task)
 {
-    operator>>(is, static_cast<Event>(task));
+    operator >> (in, static_cast<Event&>(task));
+
     return in;
 }
 
