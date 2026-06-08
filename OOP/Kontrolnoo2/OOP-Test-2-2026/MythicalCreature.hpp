@@ -17,13 +17,13 @@ public:
 
     //methods
     virtual std::ostream& describe(std::ostream& out) const = 0;
-    virtual bool canFly() const = 0;
+    virtual bool canFly() const { return false; };
     virtual MythicalCreature* clone() const = 0;
 
     //getters
     const char* GetName() const { return this->name; };
     int GetPower() const { return this->power; };
-    const char* GetBlood() { return this->blood; };
+    const char* GetBlood() const { return this->blood; };
 
 protected:
     char* name;

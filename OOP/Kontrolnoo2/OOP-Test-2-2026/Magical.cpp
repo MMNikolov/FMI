@@ -24,6 +24,7 @@ Magical &Magical::operator=(const Magical &other)
     if (this != &other)
     {
         MythicalCreature::operator=(other);
+        free();
         this->spell = new char[strlen(other.spell) + 1];
         strcpy(this->spell, other.spell);
     }
@@ -39,6 +40,7 @@ Magical::~Magical()
 std::ostream &Magical::describe(std::ostream &out) const
 {
     out << this->name << ' ' << this->power << ' ' << this->blood << ' ' << this->spell << '\n';
+    return out;
 }
 
 bool Magical::canFly() const
