@@ -5,33 +5,48 @@
 #include <fstream>
 #include <stdexcept>
 #include <cstring>
+#include <ios>
 
 class Control
 {
 public:
-    Control(const char* name, const char* helpMessage);
+    Control(const char *name, const char *helpMessage);
 
-    Control(const Control& other);
-    Control& operator=(const Control& other);
+    Control(const Control &other);
+    Control &operator=(const Control &other);
 
-    ~Control();
+    virtual ~Control();
 
-    //methods
+    // methods
     virtual void print() const = 0;
-    virtual void store(const char* filename) const = 0;
-    virtual void load(const char* filename) = 0;
-    virtual const char* settings() = 0;
+    virtual void store(std::ofstream& file) const;
+    virtual void load(std::ifstream& file);
+    virtual const char *settings() = 0;
 
-    //setters
-    const char* setName(const char* newName);
-    const char* setHelpMessage(const char* newHelpMessage);
+    // setters
+    virtual void setName(const char *newName);
+    virtual void setHelpMessage(const char *newHelpMessage);
     bool setEnabled(bool newEnabled);
+
+    //getters
+    unsigned getId() const { return this->id; };
+    const char* getName() const { return this->name; };
+    const char* getHelpMessage() const { return this->helpMessage; };
+    bool IsEdnabled() const { return this->enabled; };
 
 protected:
     const unsigned id;
-    char* name;
-    char* helpMessage;
+    char *name;
+    char *helpMessage;
     bool enabled;
+
+    void checkActive() const
+    {
+        if (!enabled)
+        {
+            throw std::invalid_argument("Control is disabled. Modification not allowed.");
+        }
+    }
 
 private:
     static unsigned GlobalId;
