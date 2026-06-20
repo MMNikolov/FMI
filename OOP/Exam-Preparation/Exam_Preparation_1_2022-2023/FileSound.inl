@@ -7,11 +7,20 @@ inline FileSound<T, M>::FileSound(const char *filename)
     {
         throw std::invalid_argument("Invlaid");
     }
-    
+
     this->filename = new char[strlen(filename) + 1];
     strcpy(this->filename, filename);
 
-    this->cachedDuration = strlen(this->filename);
+    // Отваряме файла бинарно и отиваме в края (ate - at end), за да му вземем размера
+    std::ifstream file(this->filename, std::ios::binary | std::ios::ate);
+    if (!file)
+    {
+        throw std::runtime_error("Could not open file");
+    }
+
+    size_t fileSize = file.tellg();
+    this->cachedDuration = fileSize / sizeof(T);
+    file.close();
 }
 
 template <typename T, T M>
@@ -35,8 +44,18 @@ inline size_t FileSound<T, M>::getDuration() const
 template <typename T, T M>
 inline T FileSound<T, M>::operator[](size_t index) const
 {
-    //dont know what they want from me also I didnt do it like a binary file so....
-    return T();
+    if (index >= this->cachedDuration)
+        return 0; // Защита от излизане извън граници
+
+    std::ifstream file(this->filename, std::ios::binary);
+    // Преместваме курсора до точния байт
+    file.seekg(index * sizeof(T), std::ios::beg);
+
+    T sample;
+    file.read(reinterpret_cast<char *>(&sample), sizeof(T));
+    file.close();
+
+    return sample;
 }
 
 template <typename T, T M>
