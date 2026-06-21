@@ -9,29 +9,32 @@
 class Component
 {
 public:
-    Component(const char* tag, const char* location);
+    Component(const char *tag, const char *location);
 
-    Component(const Component& other);
-    Component& operator=(const Component& other);
+    Component(const Component &other);
+    Component &operator=(const Component &other);
 
     virtual ~Component();
 
-    //methods
-    virtual void render(std::ostream& out) const = 0;
-    virtual void save(std::ofstream& out) const = 0; 
-    virtual void load(std::ifstream& in) = 0;        
-    virtual const char* status() const = 0;
-    virtual Component* clone() const = 0;
+    // methods
+    virtual void render(std::ostream &out) const = 0;
+    virtual void save(std::ofstream &out) const = 0;
+    virtual void load(std::ifstream &in) = 0;
+    virtual const char *status() const = 0;
+    virtual Component *clone() const = 0;
 
-    //getters
+    virtual void SetActive(bool activeState) { this->active = activeState; }
+    virtual int getTypeID() const = 0;
+
+    // getters
     unsigned GetId() const { return this->id; }
-    const char* GetTag() const { return this->tag; }
-    const char* GetLocation() const { return this->location; }
+    const char *GetTag() const { return this->tag; }
+    const char *GetLocation() const { return this->location; }
 
 protected:
     const unsigned id;
-    char* tag;
-    char* location;
+    char *tag;
+    char *location;
     bool active;
 
     void IsActive() const
@@ -42,8 +45,8 @@ protected:
         }
     };
 
-    void saveBase(std::ofstream& out) const;
-    void loadBase(std::ifstream& in);
+    void saveBase(std::ofstream &out) const;
+    void loadBase(std::ifstream &in);
 
 private:
     static unsigned GlobalId;

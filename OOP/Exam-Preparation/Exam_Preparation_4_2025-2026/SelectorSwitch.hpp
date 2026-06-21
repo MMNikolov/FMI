@@ -21,6 +21,7 @@ public:
     void load(std::ifstream& in) override;
     const char* status() const override;
     SelectorSwitch* clone() const override { return new SelectorSwitch(*this); }
+    int getTypeID() const override { return 3; }
 
     //methods
     bool operator()(unsigned id);

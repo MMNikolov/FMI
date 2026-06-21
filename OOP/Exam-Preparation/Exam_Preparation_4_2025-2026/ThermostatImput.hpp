@@ -16,6 +16,7 @@ public:
     void load(std::ifstream& in) override;
     const char* status() const override;
     ThermostatImput* clone() const override;
+    int getTypeID() const override { return 2; }
 
     //methods
     ThermostatImput& operator++();    // Префиксен ++

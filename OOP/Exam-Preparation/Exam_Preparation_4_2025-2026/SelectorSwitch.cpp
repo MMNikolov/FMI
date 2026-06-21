@@ -48,7 +48,6 @@ SelectorSwitch &SelectorSwitch::operator=(const SelectorSwitch &other)
         std::swap(this->count, temp.count);
         std::swap(this->currentIndex, temp.currentIndex);
     }
-    return *this;
 
     return *this;
 }

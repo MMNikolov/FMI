@@ -2,6 +2,9 @@
 #define AREA_HUB_HPP
 
 #include "Component.hpp"
+#include "StaticDisplay.hpp"
+#include "ThermostatImput.hpp"
+#include "ActionActuator.hpp"
 
 class AreaHub : public Component
 {
@@ -11,7 +14,7 @@ public:
     AreaHub(const AreaHub& other);
     AreaHub& operator=(const AreaHub& other);
 
-    ~AreaHub();
+    ~AreaHub() override;
 
     //overriden methods
     void render(std::ostream& out) const override;
@@ -19,11 +22,13 @@ public:
     void load(std::ifstream& in) override;
     const char* status() const override;
     AreaHub* clone() const override;
+    int getTypeID() const override { return 4; }
+    void SetActive(bool activeState) override;
 
     //methods
     void operator+(const Component& component);
     void operator-(unsigned id);
-    Component operator[](unsigned id);
+    Component* operator[](unsigned id);
 
     //getters
     size_t GetCount() const { return this->count; }
@@ -38,6 +43,7 @@ private:
 
 private:
     void free();
+    void resize();
 };
 
 #endif // AREA_HUB_HPP
