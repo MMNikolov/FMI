@@ -1,7 +1,7 @@
 #include "AutomationSystem.hpp"
 
 AutomationSystem::AutomationSystem(AreaHub *mainhub)
-    : mainHub(mainHub)
+    : mainHub(mainhub)
 {
     if (!mainHub)
     {

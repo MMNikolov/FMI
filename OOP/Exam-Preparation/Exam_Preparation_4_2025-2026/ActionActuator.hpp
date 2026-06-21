@@ -4,6 +4,8 @@
 #include "Component.hpp"
 #include "AreaHub.hpp"
 
+class AreaHub;
+
 class ActionActuator : public Component
 {
 public:

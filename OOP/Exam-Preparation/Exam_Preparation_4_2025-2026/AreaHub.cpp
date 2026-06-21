@@ -228,6 +228,7 @@ void AreaHub::operator-(unsigned id)
             break;
         }
     }
+
     if (target == -1)
         return;
 
