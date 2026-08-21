@@ -6,11 +6,14 @@
 void printBar(const char *label, unsigned count, unsigned total)
 {
     double percent = (total == 0) ? 0.0 : (100.0 * count) / total;
-    int barLen = (int)(percent / 2.0);   /* 1 звезда на всеки 2% -> лента до 50 символа */
+    int barLen = (int)(percent / 2.0); /* 1 звезда на всеки 2% -> лента до 50 символа */
 
     printf("%-8s: %6u  (%5.2f%%)  ", label, count, percent);
     for (int i = 0; i < barLen; i++)
+    {
         putchar('*');
+        putchar('*');
+    }
     putchar('\n');
 }
 
@@ -24,7 +27,7 @@ int main()
         printf("Not a valid enterence!");
         return 0;
     }
-    
+
     unsigned randomNum1;
     unsigned randomNum2;
     unsigned twos = 0, threes = 0, fours = 0, fives = 0, sixes = 0;
@@ -79,16 +82,16 @@ int main()
             twelves++;
         }
     }
-    
-    printBar("Two   ",    twos,    n);
-    printBar("Three ",  threes,  n);
-    printBar("Four  ",   fours,   n);
-    printBar("Five  ",   fives,   n);
-    printBar("Six   ",    sixes,   n);
-    printBar("Seven ",  sevens,  n);
-    printBar("Eight ",  eights,  n);
-    printBar("Nine  ",   nines,   n);
-    printBar("Ten   ",    tens,    n);
+
+    printBar("Two   ", twos, n);
+    printBar("Three ", threes, n);
+    printBar("Four  ", fours, n);
+    printBar("Five  ", fives, n);
+    printBar("Six   ", sixes, n);
+    printBar("Seven ", sevens, n);
+    printBar("Eight ", eights, n);
+    printBar("Nine  ", nines, n);
+    printBar("Ten   ", tens, n);
     printBar("Eleven", elevens, n);
     printBar("Twelve", twelves, n);
 
