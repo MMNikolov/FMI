@@ -19,6 +19,7 @@ int main()
     int res = binarySearch(arr, n, 10);
     printf("On what position is 10 in the array: %d", res);
 
+    free(arr);
     return 0;
 }
 
@@ -98,7 +99,7 @@ void printArray(int *arr, int itterations)
 
 void insertionSort(int **arr, int count)
 {
-    for (size_t i = 0; i < count; i++)
+    for (int i = 1; i < count; i++)
     {
         int key = (*arr)[i];
         int j = i - 1;
@@ -111,7 +112,6 @@ void insertionSort(int **arr, int count)
 
         (*arr)[j + 1] = key;
     }
-    
 }
 
 int binarySearch(int* arr, int size, int n)
